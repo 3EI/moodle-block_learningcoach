@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/learningcoach/db" VERSION="20220825" COMMENT="XMLDB file for Moodle blocks/learningcoach"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="block_learningcoach" COMMENT="Block Learning Coach main table">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_learningcoach_campusid" COMMENT="Campus ID">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_learningcoach_users" COMMENT="Learning Coach users">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="registered" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="If 1, user recorder at LearningCoach"/>
+        <FIELD NAME="data_acces" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="If 0, user does not want to share data from LearningCoach"/>
+        <FIELD NAME="time_added" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="time_register" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="date at which user must be enrolled in LC"/>
+        <FIELD NAME="time_updated" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="time_completion" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="date at which user has completed his Learning Coach profil"/>
+        <FIELD NAME="fk_moodle_user_id" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="fk_lc_user_id" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="moodle_user" TYPE="foreign-unique" FIELDS="fk_moodle_user_id" REFTABLE="mdl_user" REFFIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_learningcoach_dim" COMMENT="List of dimnesion">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="ref" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="réf on dimension"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_learningcoach_const" COMMENT="List of constructs">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="tag" TYPE="char" LENGTH="3" NOTNULL="false" SEQUENCE="false" />
+        <FIELD NAME="profile_version" TYPE="int" LENGTH="3" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="fk_id_dimension" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_dimension" TYPE="foreign" FIELDS="fk_id_dimension" REFTABLE="block_learningcoach_dim" REFFIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_learningcoach_cons_sco" COMMENT="Score per user/construct">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="construct_score" TYPE="int" LENGTH="3" NOTNULL="false" SEQUENCE="false" COMMENT="score scale 1 to 100"/>
+        <FIELD NAME="profile_version" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="fk_id_construct" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="fk_moodle_user_id" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_construct" TYPE="foreign" FIELDS="fk_id_construct" REFTABLE="block_learningcoach_const" REFFIELDS="id"/>
+        <KEY NAME="fk_moodle_user" TYPE="foreign" FIELDS="fk_moodle_user_id" REFTABLE="mdl_user" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="construct_score_u" UNIQUE="true" FIELDS="profile_version, fk_id_construct, fk_moodle_user_id"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="block_learningcoach_stats" COMMENT="Group stats">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="datas" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="json with LC data"/>
+        <FIELD NAME="time_updated" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="Time when data updated"/>
+        <FIELD NAME="moodle_group_id" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_moodle_group" TYPE="foreign" FIELDS="moodle_group_id" REFTABLE="mdl_groups" REFFIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_learningcoach_dim_tra" COMMENT="Traduction for dimensions">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="description" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="lang" TYPE="char" LENGTH="5" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="fk_id_dimension" TYPE="int" LENGTH="5" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_dimension" TYPE="foreign" FIELDS="fk_id_dimension" REFTABLE="block_learningcoach_dim" REFFIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_learningcoach_cons_tra" COMMENT="Traduction for construct">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="description" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="lang" TYPE="char" LENGTH="5" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="fk_id_construct" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="fk_construct" TYPE="foreign" FIELDS="fk_id_construct" REFTABLE="block_learningcoach_const" REFFIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_learningcoach_log_err" COMMENT="Log error table">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="type" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="description" TYPE="text" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="date_time_rec" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="Date fo the bug"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

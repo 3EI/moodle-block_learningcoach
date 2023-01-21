@@ -1,0 +1,109 @@
+/* CSS LC*/
+.path-block-learningcoach.center {
+    text-align:center;
+}
+
+.path-block-learningcoach.container.podium {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.path-block-learningcoach.podium__item {
+    width: 30%;
+}
+
+.path-block-learningcoach.podium__rank {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    color: #505050;
+    background: #CED4DA;
+    font-weight: 700;
+
+}
+
+.path-block-learningcoach.podium__force {
+    text-align: center;
+    font-weight: 600;
+    font-size:0.9em;
+    color:#6c757d ;
+    margin-bottom: 0.2em;
+}
+
+.path-block-learningcoach.podium .first {
+    min-height: 3.2em;
+    font-size: 1.8em;
+    border: 1px solid #505050;
+}
+    
+
+.path-block-learningcoach.podium .second {
+    min-height: 2.2em;
+    border-bottom: 1px solid #505050;
+    border-left: 1px solid #505050;
+    border-top: 1px solid #505050;
+}
+
+.path-block-learningcoach.podium .third {
+    min-height: 1.8em;
+    border-bottom: 1px solid #505050;
+    border-right: 1px solid #505050;
+    border-top: 1px solid #505050;
+}
+
+.path-block-learningcoach.lc__btn {
+	display: flex;
+	justify-content: center;
+	margin: 1em auto;
+}
+
+
+.path-block-learningcoach.container.stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:0 ;
+}
+
+.path-block-learningcoach.stat__content p {
+	font-weight: bold;
+	font-size: 3em;
+}
+
+
+/*Profile page*/
+span.path-block-learningcoach.dimension {
+	text-transform: uppercase;
+	font-size: 1.4em;
+	margin-bottom: 0.8em;
+	display: block;
+}
+
+span.badge {
+	font-size: 0.8em;
+	margin-right: 0.3em;
+}
+span.path-block-learningcoach.construct {
+    font-size: 1.2em;
+	margin: 0.8em 0 0.3em 0;
+    font-weight: 600;
+}
+
+li.path-block-learningcoach.construct{
+    margin-top:0.3em;
+}
+
+.path-block-learningcoach.error{
+    color:red;
+}
+
+blockquote .path-block-learningcoach{
+	border-left: 2px solid lightgrey;
+	padding-left: 1em;
+}
+
+#admin-notificationstartcourse{
+    margin-top: 1em;
+}
